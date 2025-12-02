@@ -1,0 +1,5 @@
+# DistantGreens.Charms
+
+A Hollow Knight mod which adds the Charms for a potential future mod called DistantGreens. +
+Native Integration with Randomizer 4 is planned. (Not yet implemented)
+
