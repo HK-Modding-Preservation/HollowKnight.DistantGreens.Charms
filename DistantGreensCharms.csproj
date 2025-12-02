@@ -1,19 +1,17 @@
 ﻿<!-- Credit to SFGrenade https://github.com/SFGrenade -->
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <RootNamespace>DistantGreensCharms</RootNamespace>
+        <RootNamespace>HKMod</RootNamespace>
         <TargetFramework>net472</TargetFramework>
-        <AssemblyTitle>DistantGreensCharms</AssemblyTitle>
-        <Product>DistantGreensCharms</Product>
-        <Description>A Hollow Knight mod. For more Info read the README!</Description>
+        <AssemblyTitle>HKMod</AssemblyTitle>
+        <Product>HKMod</Product>
+        <Description>A Hollow Knight mod.</Description>
         <Copyright>Copyright ©</Copyright>
         <AssemblyVersion>1.0.0.0</AssemblyVersion>
         <FileVersion>1.0.0.0</FileVersion>
         <OutputPath>bin\$(Configuration)\</OutputPath>
         <LangVersion>latest</LangVersion>
         <PackageId>DistantGreensCharms</PackageId>
-        <Configurations>Debug;Release</Configurations>
-        <Platforms>AnyCPU</Platforms>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <DebugSymbols>true</DebugSymbols>
@@ -38,7 +36,7 @@
         <ErrorReport>prompt</ErrorReport>
         <WarningLevel>4</WarningLevel>
         <!-- Path to DLL references required to build mod -->
-        <LocalRefs>$(MSBuildProgramFiles32)/Steam/steamapps/common/Hollow Knight/hollow_knight_Data/Managed</LocalRefs>
+        <LocalRefs>References</LocalRefs>
         <!-- The folder that exports will be generated in -->
         <ExportDir>Output</ExportDir>
     </PropertyGroup>
@@ -47,8 +45,8 @@
         <MakeDir Directories="$(ExportDir)"/>
         <MakeDir Directories="$(ExportDir)/zip"/>
         <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(ExportDir)"/>
-        <Copy Condition="'$(DocumentationFile)' != ''" SourceFiles="ReadMe.adoc;$(TargetPath);$(TargetDir)/$(TargetName).pdb;$(TargetDir)/$(TargetName).xml" DestinationFolder="$(ExportDir)/zip"/>
-        <Copy Condition="'$(DocumentationFile)' == ''" SourceFiles="ReadMe.adoc;$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(ExportDir)/zip/"/>
+        <Copy Condition="'$(DocumentationFile)' != ''" SourceFiles="ReadMe.md;$(TargetPath);$(TargetDir)/$(TargetName).pdb;$(TargetDir)/$(TargetName).xml" DestinationFolder="$(ExportDir)/zip"/>
+        <Copy Condition="'$(DocumentationFile)' == ''" SourceFiles="ReadMe.md;$(TargetPath);$(TargetDir)/$(TargetName).pdb" DestinationFolder="$(ExportDir)/zip/"/>
         <ZipDirectory SourceDirectory="$(ExportDir)/zip" DestinationFile="$(ExportDir)/$(TargetName).zip"/>
         <RemoveDir Directories="$(ExportDir)/zip"/>
         <PropertyGroup>
@@ -342,30 +340,6 @@
         <Reference Include="ItemChanger">
             <HintPath>$(LocalRefs)\Mods\ItemChanger\ItemChanger.dll</HintPath>
         </Reference>
-        <Reference Include="MenuChanger">
-            <HintPath>$(LocalRefs)/Mods/MenuChanger/MenuChanger.dll</HintPath>
-        </Reference>
-        <Reference Include="RandomizerMod">
-            <HintPath>$(LocalRefs)/Mods/Randomizer 4/RandomizerMod.dll</HintPath>
-        </Reference>
-        <Reference Include="RandomizerCore">
-            <HintPath>$(LocalRefs)/Mods/RandomizerCore/RandomizerCore.dll</HintPath>
-        </Reference>
-        <Reference Include="RandomizerCore.Json">
-            <HintPath>$(LocalRefs)/Mods/RandomizerCore.Json/RandomizerCore.Json.dll</HintPath>
-        </Reference>
-        <Reference Include="DebugMod">
-            <HintPath>$(LocalRefs)/Mods/DebugMod/DebugMod.dll</HintPath>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Resources\CharmIcons\MossMask.png" />
-        <EmbeddedResource Include="Resources\HUDIcons\MossMask_0.png" />
-        <EmbeddedResource Include="Resources\HUDIcons\MossMask_1.png" />
-        <EmbeddedResource Include="Resources\HUDIcons\MossMask_2.png" />
-        <EmbeddedResource Include="Resources\HUDIcons\MossMask_3.png" />
-        <EmbeddedResource Include="Resources\LogicJsons\Locations.json" />
-        <!-- Add more sprites as needed -->
     </ItemGroup>
     <ItemGroup>
         <None Include=".gitignore"/>
