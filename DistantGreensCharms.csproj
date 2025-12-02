@@ -337,10 +337,4 @@
         <None Include=".gitignore"/>
         <None Include="ReadMe.adoc"/>
     </ItemGroup>
-    <ItemGroup>
-      <PackageReference Include="HKBuildUtils" Version="0.6.1">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-    </ItemGroup>
 </Project>
