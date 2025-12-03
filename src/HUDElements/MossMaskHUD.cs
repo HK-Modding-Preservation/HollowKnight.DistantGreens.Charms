@@ -1,51 +1,35 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using DistantGreensCharms.Helper;
-using HutongGames.PlayMaker.Actions;
-using ItemChanger.Extensions;
+﻿using DistantGreensCharms.Helper;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace DistantGreensCharms.HUDElements;
 
 public class MossMaskHUD : AHUDElement
 {
-    public static MossMaskHUD Instance = new();
     public override string Name => "Moss-Mask";
-    public override string DefaultSpritePath => "HUDIcons.MossMask_0";
-    
-    public override float X => -2.15f; 
-    public override float Y => 0.3f; 
-    public override float Scale => 1f;
-    //public override GameObject OverrideParent => GameCameras.instance.hudCanvas.FindChildInHierarchy("Health");
-    public MossMaskHUDAnimation BreakSpriteAnimation {get; set;}
-
-    public void UpdateSpriteState(bool charged)
+    public override string SpritePath => "HUDIcons.MossMask_0";
+    public override bool Visible { get; set; } = false;
+    public override RectTransformAttributes LocationAttributes => new()
     {
-        if (BreakSpriteAnimation is null) 
-            BreakSpriteAnimation = new(["HUDIcons.MossMask_1", "HUDIcons.MossMask_2", "HUDIcons.MossMask_3"], GameObject);
+        anchorMin = new Vector2(0f,0f),
+        anchorMax = new Vector2(0f,0f),
+        pivot = new Vector2(0f,0f),
+        anchoredPosition = new Vector2(0f,0f),
+        sizeDelta = new Vector2(0f,0f),
+        localScale = new Vector2(0f,0f)
+    };
     
-        if (charged)
+    public string BrokenSpritePath => "HUDIcons.MossMask_1";
+    public override void SetVisibility(bool visibility)
+    {
+        if(!visibility)
         {
-            SpriteRenderer.sprite = SpriteManager.Get(DefaultSpritePath);
-            SetVisibility(true);
+            Icon.sprite = SpriteManager.Get(BrokenSpritePath);
+            new WaitForSeconds(0.5f);
         }
         else
         {
-            BreakSpriteAnimation.StartAnimation();
+            Icon.sprite = SpriteManager.Get(SpritePath);
         }
-    }
-}
-
-public class MossMaskHUDAnimation : HUDAnimation
-{
-    public MossMaskHUDAnimation(IEnumerable<string> framePaths, GameObject gameObject, int fps = 12) : base(framePaths, gameObject, fps)
-    {
-    }
-
-    protected override IEnumerator PlayAnimation()
-    {
-        yield return base.PlayAnimation();
-        SpriteRenderer.enabled = false;
+        base.SetVisibility(visibility);
     }
 }
