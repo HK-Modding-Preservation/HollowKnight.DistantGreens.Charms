@@ -1,3 +1,0 @@
-﻿# Helpers
-
-Contains Helper Classes.
