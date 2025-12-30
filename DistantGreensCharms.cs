@@ -131,18 +131,16 @@ namespace DistantGreensCharms
                 itemTag.Properties["PoolGroup"] = "Charms";
                 Finder.DefineCustomLocation(location);
                 Locations.Add(charm, (item, location));
-
+            }
+            //Integrations
+            if (ModHooks.GetMod("MenuChanger") != null && ModHooks.GetMod("Randomizer 4") != null)
+            {
+                RandomizerManager.Hook();
+            }
                 
-                //Integrations
-                if (ModHooks.GetMod("MenuChanger") != null && ModHooks.GetMod("Randomizer 4") != null)
-                {
-                    RandomizerManager.Hook();
-                }
-                
-                if (ModHooks.GetMod("DebugMod") != null)
-                {
-                    DebugModHelper.Hook();
-                }
+            if (ModHooks.GetMod("DebugMod") != null)
+            {
+                DebugModHelper.Hook();
             }
             // Modhooks
             ModHooks.GetPlayerBoolHook += ReadCharmBools;
@@ -175,13 +173,14 @@ namespace DistantGreensCharms
                 List<AbstractPlacement> placements = new();
                 foreach ((ItemChanger.Items.CharmItem, CoordinateLocation) pair in Locations.Values)
                 {
+                    pair.Item2.flingType = FlingType.DirectDeposit;
                     placements.Add(
                         pair.Item2
                             .Wrap()
                     );
                 }
                 PlaceAtAbstractLocations(placements);
-                 //maybe Add something for things that need certain locations, LIKE repairs
+                //maybe Add something for things that need certain locations, LIKE repairs
             }
             else if (bossRush)
             {
