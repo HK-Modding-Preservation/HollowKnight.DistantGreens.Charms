@@ -26,9 +26,9 @@ public class Painters_Spirit : ACharm
     public override string Name => "Painters Spirit";
     public override string Description => "Masterful artists poured their ideas and experience into this charm, \nin the process enlightening the users nail arts.";
     public override int DefaultCost => 2;
-    public override string SceneName => "GG_Workshop"; //todo 
-    public override float X => 17.65f; //todo 
-    public override float Y => 6.41f; //todo 
+    public override string SceneName => "Room_Mask_Maker"; //todo 
+    public override float X => 12.0f; //todo 
+    public override float Y => 6.4f; //todo 
 
     public override CharmState State(LocalSettings s) => s.Painters_Spirit;
     

@@ -13,7 +13,6 @@ using IL.HutongGames.PlayMaker.Actions;
 using ItemChanger;
 using ItemChanger.Locations;
 using ItemChanger.UIDefs;
-using RandomizerMod.Menu;
 using SFCore;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -164,6 +163,7 @@ namespace DistantGreensCharms
         public Dictionary<ACharm,(ItemChanger.Items.CharmItem, CoordinateLocation)> Locations = new();
         private void PlaceItem(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
         {
+            ItemChangerMod.CreateSettingsProfile();
             bool isRandomized = false;
             if (ModHooks.GetMod("MenuChanger") != null && ModHooks.GetMod("Randomizer 4") != null)
             {
