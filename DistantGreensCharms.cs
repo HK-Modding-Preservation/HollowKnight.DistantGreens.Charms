@@ -13,7 +13,6 @@ using IL.HutongGames.PlayMaker.Actions;
 using ItemChanger;
 using ItemChanger.Locations;
 using ItemChanger.UIDefs;
-using RandomizerMod.Menu;
 using SFCore;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -43,7 +42,8 @@ namespace DistantGreensCharms
         
         internal static List<ACharm> Charms = new()
         {
-            MossMask.Instance
+            MossMask.Instance,
+            Painters_Spirit.Instance
         };
         
         internal Dictionary<string, Func<bool, bool>> BoolGetters = new();
@@ -131,18 +131,16 @@ namespace DistantGreensCharms
                 itemTag.Properties["PoolGroup"] = "Charms";
                 Finder.DefineCustomLocation(location);
                 Locations.Add(charm, (item, location));
-
+            }
+            //Integrations
+            if (ModHooks.GetMod("MenuChanger") != null && ModHooks.GetMod("Randomizer 4") != null)
+            {
+                RandomizerManager.Hook();
+            }
                 
-                //Integrations
-                if (ModHooks.GetMod("MenuChanger") != null && ModHooks.GetMod("Randomizer 4") != null)
-                {
-                    RandomizerManager.Hook();
-                }
-                
-                if (ModHooks.GetMod("DebugMod") != null)
-                {
-                    DebugModHelper.Hook();
-                }
+            if (ModHooks.GetMod("DebugMod") != null)
+            {
+                DebugModHelper.Hook();
             }
             // Modhooks
             ModHooks.GetPlayerBoolHook += ReadCharmBools;
@@ -163,10 +161,11 @@ namespace DistantGreensCharms
         public Dictionary<ACharm,(ItemChanger.Items.CharmItem, CoordinateLocation)> Locations = new();
         private void PlaceItem(On.UIManager.orig_StartNewGame orig, UIManager self, bool permaDeath, bool bossRush)
         {
+            ItemChangerMod.CreateSettingsProfile();
             bool isRandomized = false;
             if (ModHooks.GetMod("MenuChanger") != null && ModHooks.GetMod("Randomizer 4") != null)
             {
-                isRandomized = RandomizerMod.RandomizerMod.RS?.GenerationSettings != null;
+                isRandomized = RandomizerConnectionMenu.Instance.AddCharms;
             }
             
             if (isRandomized)
@@ -174,13 +173,14 @@ namespace DistantGreensCharms
                 List<AbstractPlacement> placements = new();
                 foreach ((ItemChanger.Items.CharmItem, CoordinateLocation) pair in Locations.Values)
                 {
+                    pair.Item2.flingType = FlingType.DirectDeposit;
                     placements.Add(
                         pair.Item2
                             .Wrap()
                     );
                 }
                 PlaceAtAbstractLocations(placements);
-                 //maybe Add something for things that need certain locations, LIKE repairs
+                //maybe Add something for things that need certain locations, LIKE repairs
             }
             else if (bossRush)
             {
